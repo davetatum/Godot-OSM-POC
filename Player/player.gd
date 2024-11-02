@@ -4,17 +4,21 @@ signal player_entered_world_tile(x, y, tile_position)
 
 var current_tile
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
-
+@export var ray_cast_per_second: float = 4 
+var time_since_last_cast: float = 0.0
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	var tile = cast_ray_down()
-	if tile and (!current_tile or (current_tile.tile_x != tile.tile_x or current_tile.tile_y != tile.tile_y)) :
-		current_tile = tile
-		emit_signal("player_entered_world_tile", tile.tile_x, tile.tile_y, tile.position)
+	# reduce unnessesary ray casting
+	if time_since_last_cast < 1.0/ray_cast_per_second:
+		time_since_last_cast += delta
+	else:
+		time_since_last_cast = 0.0
+		var tile = cast_ray_down()
+		if tile and (!current_tile or (current_tile.tile_x != tile.tile_x or current_tile.tile_y != tile.tile_y)) :
+			current_tile = tile
+			# connects to the map_container to load new tiles if necesary as the player moves
+			emit_signal("player_entered_world_tile", tile.tile_x, tile.tile_y, tile.position)
 
 # find the tile the player is above, so we know when to expand the map
 func cast_ray_down() -> Object:
