@@ -20,7 +20,6 @@ func _ready():
 	generate_grid(coords["x"], coords["y"], Vector3(0, 0, 0))
 
 func generate_grid(start_x, start_y, origin_positon):
-	print('Generating grid...')
 	var offset = grid_size / 2 
 	var load_count = 0
 	for y in grid_size:
@@ -31,7 +30,7 @@ func generate_grid(start_x, start_y, origin_positon):
 				load_count+=1
 				var tile = create_tile(x_cord, y_cord)
 				tile.position = tile.position + origin_positon + Vector3(x - offset, 0, y - offset)
-	print('Loaded %s new tiles' % load_count)
+	#print('Loaded %s new tiles' % load_count)
 
 func create_tile(x: int, y: int) -> Node3D:
 	var tile = map_tile.instantiate()
@@ -40,7 +39,6 @@ func create_tile(x: int, y: int) -> Node3D:
 	tile_bucket.add_child(tile)
 	tile_cache[[x, y]] = tile
 	return tile
-
 
 # move the world under the player
 func _physics_process(delta):
@@ -66,10 +64,13 @@ func _mercator_projection(lat: float, lon: float, zoom: int ) -> Dictionary:
 	var lat_rad = deg_to_rad(lat)
 	var y_tile = floor((1.0 - log(tan(lat_rad) + (1 / cos(lat_rad))) / PI) / 2.0 * n)
 	return {"x": x_tile, "y": y_tile}
-	
-
 
 # emitted from player when they move over a new tile
 func _on_player_player_entered_world_tile(x, y, tile_position):
 	generate_grid(x, y, tile_position)
-	
+
+func _on_tile_purge_timer_timeout():
+	for tile in tile_cache.values():
+		if tile.global_position.distance_to(Vector3.ZERO) > grid_size*2:
+			tile_cache.erase([tile.tile_x, tile.tile_y])
+			tile.queue_free()

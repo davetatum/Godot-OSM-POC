@@ -6,3 +6,9 @@
 script = ExtResource("1_kmdud")
 
 [node name="MapTiles" type="Node3D" parent="."]
+
+[node name="TilePurgeTimer" type="Timer" parent="."]
+wait_time = 5.0
+autostart = true
+
+[connection signal="timeout" from="TilePurgeTimer" to="." method="_on_tile_purge_timer_timeout"]
