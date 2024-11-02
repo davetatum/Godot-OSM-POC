@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://dymbfe2o6s4tp"]
+
+[ext_resource type="Script" path="res://Map/map_tile.gd" id="1_74rjb"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_3uodn"]
+size = Vector3(1, 0, 1)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_7pdo5"]
+size = Vector2(1, 1)
+
+[node name="map_tile" type="Area3D"]
+script = ExtResource("1_74rjb")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_3uodn")
+
+[node name="Mesh" type="MeshInstance3D" parent="."]
+mesh = SubResource("PlaneMesh_7pdo5")

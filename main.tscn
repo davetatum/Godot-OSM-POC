@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://dh0gq80ikhvmy"]
+
+[ext_resource type="PackedScene" uid="uid://dpas5wq75oivi" path="res://Map/map_container.tscn" id="1_86jw6"]
+[ext_resource type="PackedScene" uid="uid://bnkuec8jffdiw" path="res://Player/player.tscn" id="2_dbc1j"]
+
+[node name="Main" type="Node3D"]
+
+[node name="Player" parent="." instance=ExtResource("2_dbc1j")]
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0.466338, 0)
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.49876, 0.86674, 0, -0.86674, 0.49876, 0, 1.98838, 0.999063)
+
+[node name="OmniLight3D" type="OmniLight3D" parent="Camera3D"]
+
+[node name="Map_container" parent="." instance=ExtResource("1_86jw6")]
+
+[connection signal="player_entered_world_tile" from="Player" to="Map_container" method="_on_player_player_entered_world_tile"]

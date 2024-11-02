@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://dpas5wq75oivi"]
+
+[ext_resource type="Script" path="res://Map/Map_container.gd" id="1_kmdud"]
+
+[node name="Map_container" type="Node3D"]
+script = ExtResource("1_kmdud")
+
+[node name="MapTiles" type="Node3D" parent="."]
