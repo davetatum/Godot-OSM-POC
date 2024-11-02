@@ -10,26 +10,27 @@ const speed = 1
 @export_range(-180, 180, 0.000001) var longitude: float = -75.163331
 
 @export_group("Map Config")
+# Zoom level from 0-19: 0 is the entire earth in 1 tiles and 19 fully zoomed in
 @export_range(0,19) var zoom: int = 19
-
-#TODO unique x and y sizes
-const grid_size = 5
+@export var grid_width = 15
+@export var grid_height = 10
 
 func _ready():
 	var coords = _mercator_projection(latitude, longitude, zoom)
 	generate_grid(coords["x"], coords["y"], Vector3(0, 0, 0))
 
 func generate_grid(start_x, start_y, origin_positon):
-	var offset = grid_size / 2 
+	var x_offset = grid_width / 2 
+	var y_offset = grid_height / 2
 	var load_count = 0
-	for y in grid_size:
-		for x in grid_size:
-			var x_cord = start_x + x - offset
-			var y_cord = start_y + y - offset
+	for y in grid_height:
+		for x in grid_width:
+			var x_cord = start_x + x - x_offset
+			var y_cord = start_y + y - y_offset
 			if !tile_cache.has([x_cord, y_cord]):
 				load_count+=1
 				var tile = create_tile(x_cord, y_cord)
-				tile.position = tile.position + origin_positon + Vector3(x - offset, 0, y - offset)
+				tile.position = tile.position + origin_positon + Vector3(x - x_offset, 0, y - y_offset)
 	#print('Loaded %s new tiles' % load_count)
 
 func create_tile(x: int, y: int) -> Node3D:
@@ -71,6 +72,6 @@ func _on_player_player_entered_world_tile(x, y, tile_position):
 
 func _on_tile_purge_timer_timeout():
 	for tile in tile_cache.values():
-		if tile.global_position.distance_to(Vector3.ZERO) > grid_size*2:
+		if tile.global_position.distance_to(Vector3.ZERO) > max(grid_height, grid_width)*2:
 			tile_cache.erase([tile.tile_x, tile.tile_y])
 			tile.queue_free()
