@@ -8,10 +8,10 @@ POC for an AR game with Godot using data from Open Street Maps
 - Open Street Maps (OSM): <https://www.openstreetmap.org>
 
 ## Open Street Map Usage
-If using this code unmodified please read and understand the [usage guildelines for the tile server](https://operations.osmfoundation.org/policies/tiles/). This service is provided by OSM free and funded by donation.  If using this code for a released project, you should consider hosting your own tile server or paying for a comercial service.
+If using this code unmodified please read and understand the [usage guildelines for the tile server](https://operations.osmfoundation.org/policies/tiles/). This service is provided by OSM and funded by donations.  If using this code for a released project, you should consider hosting your own tile server or paying for a comercial service.
 
 ## Map Tiles
-This POC uses raster tiles (256x256) that are pre-renderd by OSM.  There are multiple freely available [tile servers](https://wiki.openstreetmap.org/wiki/Raster_tile_providers) that have different styles.  Alternativey this could be extended to use [vector tiles](https://wiki.openstreetmap.org/wiki/Vector_tiles#Mapbox_Vector_Tiles) or you can [create your own](https://wiki.openstreetmap.org/wiki/Rendering) pre-rendered raster tiles
+This uses raster tiles (256x256) that are pre-renderd by OSM.  There are multiple freely available [tile servers](https://wiki.openstreetmap.org/wiki/Raster_tile_providers) that have different styles.  Alternativey this could be extended to use [vector tiles](https://wiki.openstreetmap.org/wiki/Vector_tiles#Mapbox_Vector_Tiles) or you can [create your own](https://wiki.openstreetmap.org/wiki/Rendering) pre-rendered raster tiles.  The tile server url is hard coded in  Map/map_tile.gd and requested when a new tile is instantiated.
 
 
 ## Getting Started with this POC
@@ -25,4 +25,4 @@ The map container also exposes height and width variables that determine the num
 
 ***Note:** please be mindful how much data you are requesting from OSM.  They provide this for free, so let's be good FOSS citizens. 
 
-Zoom determines the level of detail you'll see when viewing the map.  This can also be set on the Map Container before running.  Valid values range from 0-19.  0 being the lowest level of detail, with 1 tile representing the entire map.  For every integer increase each tile is split into 4, increasing the number of tiles exponentially. The default value is 19 which shows the most detail.  
+Zoom determines the level of detail you'll see when viewing the map.  This can also be set on the Map Container before running.  Valid values range from 0-19.  0 being the lowest level of detail, with 1 tile representing the entire map.  For every integer increase each tile is split into 4. The default value is 19 which shows the most detail.  
