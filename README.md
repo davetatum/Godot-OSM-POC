@@ -1,7 +1,7 @@
 # Godot-OSM-POC
 POC for an AR game with Godot using data from Open Street Maps
 
-![POC Screen Shot](Images/ScreenShot.png)
+![POC Screen Shot](Images/player_view.png)
 
 ## Requirements
 - Godot 4.3: <https://godotengine.org/>
